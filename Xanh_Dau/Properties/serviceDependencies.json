@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:DESKTOP-GKO8HVR:SQLEXPRESS"
+    },
+    "secrets1": {
+      "type": "secrets"
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "tcp:charmily-123.database.windows.net,1433",
+      "dynamicId": null
+    }
+  }
+}

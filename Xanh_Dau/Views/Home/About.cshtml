@@ -1,0 +1,123 @@
+@{
+    ViewData["Title"] = "About Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css"/>
+<link rel="stylesheet" href="~/tailwind/build/tailwind.css">
+<link rel="stylesheet" href="~/fonts/boxicons.css"/>
+<script src="~/js/site.js"></script>
+<div class="bg-gray-100">
+    <!-- 1. Giới thiệu chung -->
+    <section class="bg-green-50 py-16">
+        <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center px-6">
+            <!-- Phần hình ảnh -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-4">
+                    <img src="/img/Charm.jpg" alt="Sản phẩm" class="rounded-lg shadow-md w-full" data-wow-delay="0.1s">
+                    <img src="/img/Charm-7.jpg" alt="Trò chơi demo" class="rounded-lg shadow-md w-full ml-auto mt-6" data-wow-delay="0.3s">
+                </div>
+
+                <div class="space-y-4">
+                    <img src="/img/Charm-8.jpg" alt="Thẻ bài" class="rounded-lg shadow-md w-full mr-auto"
+                         data-wow-delay="0.5s">
+                    <img src="/img/charm-4.jpg" alt="Bản đồ" class="rounded-lg shadow-md w-full mr-auto" data-wow-delay="0.7s">
+                </div>
+            </div>
+
+            <!-- Phần nội dung -->
+            <div>
+                <h5 class="text-lg font-semibold text-gray-600">Về Charmily</h5>
+                <h1 class="text-4xl font-bold text-gray-800 mt-4">
+                    Chào Mừng Đến Với <span class="text-pink-300"><i class="fas fa-leaf"></i> Charmily</span>
+                </h1>
+                <p class="mt-6 text-gray-600">
+                    <strong>Charmily</strong> là cửa hàng chuyên cung cấp các loại vòng tay charm tùy chỉnh độc đáo, mang đậm dấu ấn cá nhân. Tại Charmily, 
+                    
+                    bạn có thể tự do thiết kế vòng tay theo sở thích với nhiều mẫu charm đa dạng, từ phong cách thanh lịch đến cá tính. Chúng tôi cam kết mang đến sản phẩm chất lượng cao, 
+                    
+                    giúp bạn lưu giữ những kỷ niệm đặc biệt hoặc tạo ra món quà ý nghĩa cho người thân yêu. Charmily - nơi tỏa sáng cá tính của bạn!
+                </p>
+                <p id="moreAbout" class="text-gray-600 mt-4 hidden">
+                    Chúng tôi cam kết mang đến sản phẩm chất lượng cao, được làm từ các vật liệu bền đẹp, an toàn cho người sử dụng. Tại Charmily,
+                    mỗi chiếc vòng tay không chỉ là một món đồ trang sức,
+                    mà còn là một tác phẩm nghệ thuật, giúp bạn lưu giữ những kỷ niệm đặc biệt hoặc tạo ra món quà ý nghĩa cho người thân yêu. 
+                    Hãy để chúng tôi giúp bạn kể câu chuyện của mình qua từng chiếc vòng tay độc đáo!
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <div class="flex items-center border-l-4 border-pink-300 pl-4">
+                        <h2 class="text-4xl font-bold text-gray-800">6</h2>
+                        <div class="ml-4">
+<p class="text-gray-600">Tháng phát triển</p>
+                            <p class="text-gray-700 font-semibold">Sản phẩm</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center border-l-4 pink-green-600 pl-4">
+                        <h2 class="text-4xl font-bold text-gray-800">5</h2>
+                        <div class="ml-4">
+                            <p class="text-gray-600">Thành viên</p>
+                            <p class="text-gray-700 font-semibold">Trong đội ngũ</p>
+                        </div>
+                    </div>
+                </div>
+                <button
+                    class="bg-pink-300 font-bold text-white font-semibold py-3 px-6 mt-10 rounded hover:bg-pink-400"
+                    onclick="document.getElementById('moreAbout').classList.toggle('hidden')">
+                    Tìm hiểu thêm
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Lời mời gọi tham gia -->
+    <section class="bg-pink-300 text-white py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold">Tham gia cùng Charmily</h2>
+            <p class="mt-4">Hãy để chúng tôi được chia sẻ những khoảnh khắc trọn vẹn bên gia đình và người thân.</p>
+            <a href="/community"
+               class="bg-white text-pink-300 px-12 py-3 rounded-full mt-6 inline-block hover:text-black font-bold">
+                Tham gia
+            </a>
+        </div>
+    </section>
+
+  <!-- 4. Giới thiệu đội ngũ phát triển -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-800">Đội ngũ phát triển</h2>
+            <div class="mt-8 flex flex-wrap justify-center gap-8">
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg w-64 text-center">
+                    <img src="/img/avatar.jpg" alt="Team Member 1" class="w-32 h-32 rounded-full mx-auto">
+                    <h3 class="text-xl font-semibold mt-4">Lê Võ Hải Huy</h3>
+                    <p class="text-gray-600">CEO</p>
+                    <p class="mt-4 text-gray-600">Lãnh đạo với tầm nhìn chiến lược và đam mê sáng tạo.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg w-64 text-center">
+                    <img src="/img/avatar.jpg" alt="Team Member 1" class="w-32 h-32 rounded-full mx-auto">
+                    <h3 class="text-xl font-semibold mt-4">Trần Hồng Lĩnh</h3>
+                    <p class="text-gray-600">CTO</p>
+                    <p class="mt-4 text-gray-600">Chuyên gia công nghệ, sáng tạo giải pháp kỹ thuật đột phá.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg w-64 text-center">
+                    <img src="/img/avatar.jpg" alt="Team Member 1" class="w-32 h-32 rounded-full mx-auto">
+                    <h3 class="text-xl font-semibold mt-4">Trần Thị Kim Chu</h3>
+                    <p class="text-gray-600">CFO</p>
+                    <p class="mt-4 text-gray-600">Quản lý tài chính vững chắc, đảm bảo sự phát triển bền vững.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg w-64 text-center">
+                    <img src="/img/avatar.jpg" alt="Team Member 1" class="w-32 h-32 rounded-full mx-auto">
+                    <h3 class="text-xl font-semibold mt-4">Lê Thị Thùy Mị</h3>
+                    <p class="text-gray-600">CMO</p>
+                    <p class="mt-4 text-gray-600">Xây dựng chiến lược tiếp thị và kết nối sản phẩm với khách hàng.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg w-64 text-center">
+                    <img src="/img/avatar.jpg" alt="Team Member 1" class="w-32 h-32 rounded-full mx-auto">
+                    <h3 class="text-xl font-semibold mt-4">Khưu Thị Kiều Trân</h3>
+                    <p class="text-gray-600">COO</p>
+                    <p class="mt-4 text-gray-600">Tối ưu quy trình vận hành, đảm bảo hiệu quả công ty.</p>
+                </div>
+                <!-- Thêm các thành viên khác -->
+            </div>
+        </div>
+    </section>
+</div>

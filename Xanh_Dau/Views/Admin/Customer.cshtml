@@ -1,0 +1,222 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Models.Customer>
+@{
+    ViewData["Title"] = "Customer Management Page";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css"/>
+<link rel="stylesheet" href="~/tailwind/build/tailwind.css">
+<link rel="stylesheet" href="~/fonts/boxicons.css"/>
+<script src="~/js/site.js"></script>
+
+<div class="p-6 bg-gray-100 min-h-screen">
+    <h3 class="text-xl font-semibold text-gray-800 mb-6">Quản lí tài khoản khách hàng</h3>
+    <!-- Search & Filter Tools -->
+    <div class="bg-white p-6 rounded-lg shadow-lg mb-2">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Công cụ tìm kiếm và lọc</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <input type="text" placeholder="Tìm kiếm theo tên, email hoặc số điện thoại"
+                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                <option value="">Trạng thái tài khoản</option>
+                <option value="active">Hoạt động</option>
+                <option value="suspended">Tạm khóa</option>
+            </select>
+            <input type="date" placeholder="Ngày đăng ký"
+                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                <option value="">Loại khách hàng</option>
+                <option value="regular">Thường xuyên</option>
+                <option value="potential">Tiềm năng</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Customer List Table -->
+    <div class="bg-white p-6 rounded-lg shadow-lg" style="min-height: 310px;">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Danh sách khách hàng</h3>
+        <div class="overflow-x-auto" style="min-height: 310px;">
+            <table class="w-full border-collapse border border-gray-200">
+                <thead>
+                <tr class="bg-gray-100 text-gray-600 text-sm">
+                    <th class="border border-gray-200 px-4 py-2 text-left">ID</th>
+                    <th class="border border-gray-200 px-4 py-2 text-left">Tên khách hàng</th>
+                    <th class="border border-gray-200 px-4 py-2 text-left">Email</th>
+                    <th class="border border-gray-200 px-4 py-2 text-left">Số điện thoại</th>
+                    <th class="border border-gray-200 px-4 py-2 text-left">Ngày đăng ký</th>
+                    <th class="border border-gray-200 px-4 py-2 text-left">Trạng thái</th>
+                    <th class="border border-gray-200 px-4 py-2 text-left">Lần hoạt động cuối</th>
+                    <th class="border border-gray-200 px-4 py-2 text-center">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody class="text-sm text-gray-700">
+                @foreach (var item in Model)
+                {
+                    <tr class="hover:bg-gray-50">
+                        <td class="border border-gray-200 px-4 py-2">@item.CustomerId</td>
+                        <td class="border border-gray-200 px-4 py-2">@item.LastName @item.FirstName</td>
+                        <td class="border border-gray-200 px-4 py-2">@item.Email</td>
+                        <td class="border border-gray-200 px-4 py-2">@item.PhoneNumber</td>
+                        <td class="border border-gray-200 px-4 py-2">@item.CreatedAt</td>
+                        <td class="border border-gray-200 px-4 py-2 text-green-500">@item.Status.ToUpper()</td>
+                        <td class="border border-gray-200 px-4 py-2">@item.LastLogin</td>
+                        <td class="border border-gray-200 px-4 py-2 text-center">
+                            <div class="relative">
+                                <button class="px-2 py-1 text-black focus:outline-none" onclick="toggleDropdown(this)">
+                                    <i class='bx bx-dots-vertical-rounded'></i>
+                                </button>
+                                <div
+                                    class="absolute hidden mt-2 bg-white border border-gray-200 rounded shadow-lg w-40 z-10"
+                                    style="margin-left: -7rem; top: 1.3rem;">
+                                    <button id="openModalButton"
+                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Xem chi tiết
+                                    </button>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Gửi
+                                        email</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Xóa tài
+                                        khoản</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Chỉnh
+                                        sửa</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100">Khóa tài
+                                        khoản</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+        </div>
+        <div class="">
+            <!-- Pagination -->
+            <div class="flex justify-end items-center mt-4">
+                <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none">
+                    Trước
+                </button>
+                <button class="px-4 py-2 mx-1 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">
+                    1
+                </button>
+                <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none">
+                    2
+                </button>
+                <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none">
+                    3
+                </button>
+                <span class="px-2 text-gray-600">...</span>
+                <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none">
+                    Tiếp
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="customerModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white rounded-lg shadow-2xl w-[600px] max-w-full overflow-hidden">
+        <!-- Header -->
+        <div class="flex justify-between items-center px-6 py-4 bg-blue-500 text-white">
+            <h2 class="text-lg font-bold">Thông tin chi tiết khách hàng</h2>
+            <button id="closeModalButton" class="text-xl hover:text-gray-200">✕</button>
+        </div>
+        <!-- Modal Body -->
+        <div class="p-6 space-y-4">
+            <!-- Hình ảnh -->
+            <div class="flex justify-center mb-4">
+                <img src="https://via.placeholder.com/100" alt="Customer Picture"
+                     class="w-24 h-24 rounded-full border border-gray-200 shadow">
+            </div>
+            <!-- Thông tin chi tiết -->
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <p class="text-sm text-gray-600">Họ:</p>
+                    <p class="text-base text-gray-800 font-semibold">Nguyễn</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Tên:</p>
+                    <p class="text-base text-gray-800 font-semibold">Văn A</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Giới tính:</p>
+                    <p class="text-base text-gray-800 font-semibold">Nam</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Email:</p>
+                    <p class="text-base text-gray-800 font-semibold">nguyenvana@email.com</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Số điện thoại:</p>
+                    <p class="text-base text-gray-800 font-semibold">0123-456-789</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Địa chỉ:</p>
+                    <p class="text-base text-gray-800 font-semibold">123 Đường ABC, Quận 1</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Ngày sinh:</p>
+                    <p class="text-base text-gray-800 font-semibold">01/01/1990</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Username:</p>
+                    <p class="text-base text-gray-800 font-semibold">nguyenvana</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Trạng thái:</p>
+                    <p class="text-base text-gray-800 font-semibold">Active</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Lần đăng nhập cuối:</p>
+                    <p class="text-base text-gray-800 font-semibold">24/12/2024 10:00</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Ngày tạo:</p>
+                    <p class="text-base text-gray-800 font-semibold">01/01/2024</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Cập nhật gần nhất:</p>
+                    <p class="text-base text-gray-800 font-semibold">24/12/2024</p>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="flex justify-end px-6 py-4 bg-gray-50">
+            <button id="closeModalButtonFooter"
+                    class="px-4 py-2 text-sm text-white bg-gray-600 hover:bg-gray-700 rounded">Đóng
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleDropdown(button) {
+        const dropdown = button.nextElementSibling;
+        dropdown.classList.toggle('hidden');
+    }
+
+    const openModalButton = document.getElementById("openModalButton");
+    const closeModalButton = document.getElementById("closeModalButton");
+    const closeModalButtonFooter = document.getElementById("closeModalButtonFooter");
+    const customerModal = document.getElementById("customerModal");
+
+    // Mở modal
+    openModalButton.addEventListener("click", () => {
+        customerModal.classList.remove("hidden");
+    });
+
+    // Đóng modal
+    const closeModal = () => {
+        customerModal.classList.add("hidden");
+    };
+
+    closeModalButton.addEventListener("click", closeModal);
+    closeModalButtonFooter.addEventListener("click", closeModal);
+
+    // Đóng modal khi bấm ngoài
+    window.addEventListener("click", (event) => {
+        if (event.target === customerModal) {
+            closeModal();
+        }
+    });
+</script>

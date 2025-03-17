@@ -1,0 +1,168 @@
+@{
+    ViewData["Title"] = "Blog Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css"/>
+<link rel="stylesheet" href="~/tailwind/build/tailwind.css">
+<link rel="stylesheet" href="~/fonts/boxicons.css"/>
+<script src="~/js/site.js"></script>
+<div class="bg-gray-100">
+
+    <!-- 1. Giới thiệu chung về Blog -->
+    <section class="bg-pink-300 text-white py-16">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold">Chào mừng đến với Charmily</h1>
+            <p class="mt-4 text-lg"> Nơi tỏa sáng cá tính của bạn,
+                lưu giữ những kỷ niệm ý nghĩa qua từng thiết kế vòng tay độc đáo!</p>
+        </div>
+    </section>
+
+    <!-- 2. Danh mục bài viết -->
+    <section class="container mx-auto py-12">
+        <h2 class="text-3xl font-bold text-center text-gray-800">Danh mục bài viết</h2>
+        <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
+            <button class="bg-pink-300 text-white px-6 py-3 rounded-md hover:bg-pink-400">Hướng dẫn chọn Charm </button>
+            <button class="bg-pink-300 text-white px-6 py-3 rounded-md hover:bg-pink-400">
+                Trang sức theo chủ đề
+            </button>
+            <button class="bg-pink-300 text-white px-6 py-3 rounded-md hover:bg-pink-400">
+                Vòng tay & Charm
+            </button>
+            <button class="bg-pink-300 text-white px-6 py-3 rounded-md hover:bg-pink-400">Bộ sưu tập mới</button>
+            <button class="bg-pink-300 text-white px-6 py-3 rounded-md hover:bg-pink-400">Sự kiện và hoạt động
+            </button>
+        </div>
+    </section>
+
+    <!-- 3. Danh sách các bài viết nổi bật -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800">Bài viết nổi bật</h2>
+            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+                <!-- Bài viết 1 -->
+                <div class="bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src="/img/charm-node.jpg" alt="Bài viết 1" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-gray-800">Cách để bạn cho vòng tay cho phù hợp</h3>
+                        <p class="mt-4 text-gray-600">Chọn vòng tay phù hợp bằng cách kết hợp charm theo sở thích,
+                            phong cách và ý nghĩa cá nhân của bạn!</p>
+                        <a href="#" class="text-pink-300 font-semibold hover:text-pink-400 mt-4 inline-block">Đọc
+                            tiếp</a>
+                    </div>
+                </div>
+                <!-- Bài viết 2 -->
+                <div class="bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src="/img/charm-node-1.jpg" alt="Bài viết 2" class="w-3/5 h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-gray-800">Lựa Chọn Charm cho vòng tay</h3>
+                        <p class="mt-4 text-gray-600">Lựa chọn charm phù hợp để tạo nên chiếc vòng tay độc đáo,
+                            thể hiện phong cách và câu chuyện riêng của bạn.</p>
+                        <a href="#" class="text-pink-300 font-semibold hover:text-pink-400 mt-4 inline-block">Đọc
+                            tiếp</a>
+                    </div>
+                </div>
+                <!-- Các bài viết khác -->
+            </div>
+        </div>
+    </section>
+
+  <!-- 4. Các bài viết cụ thể -->
+    <section class="container mx-auto py-16 bg-white">
+        <div class="flex flex-col lg:flex-row gap-12">
+            <!-- Hình ảnh bài viết -->
+            <div class="lg:w-1/2">
+                <img src="/img/charm-6.jpg" alt="Bài viết chi tiết"
+                     class="w-full h-auto object-cover rounded-lg shadow-lg">
+            </div>
+
+            <!-- Nội dung bài viết -->
+            <div class="lg:w-1/2">
+                <h2 class="text-3xl font-bold text-gray-800">Các loại charm được yêu thích</h2>
+                <p class="mt-4 text-lg text-gray-600">Các loại charm (mặt dây chuyền hoặc phụ kiện nhỏ) đang ngày càng trở nên 
+                    
+                    phổ biến và được yêu thích trong giới trẻ bởi tính cá nhân hóa và ý nghĩa mà chúng mang lại.
+                    
+                    Một số loại charm được ưa chuộng nhất bao gồm charm hình trái tim tượng trưng cho tình yêu và sự gắn kết, </p>
+                <div class="mt-6">
+                    <h3 class="text-2xl font-semibold text-gray-800">Chọn charm theo chủ đề </h3>
+                    <p class="mt-4 text-gray-600">Để chọn các loại charm theo chủ đề bạn cần phải chọn các loại charm cho phù hợp với chủ đề bạn muốn ,với việc chọn charm theo chủ đề sẽ giúp cho vòng tay của bạn trở nên đẹp và cá tính hơn...</p>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-2xl font-semibold text-gray-800">Thông tin hữu ích về các loại charm</h3>
+                    <p class="mt-4 text-gray-600">Để có thể chọn charm phù hợp bạn cần biết các thông tin về nó để chọn cho phù hợp ...</p>
+                </div>
+                <div class="mt-8">
+                    <a href="https://link-to-product"
+                       class="bg-pink-300 text-white px-6 py-3 rounded-md hover:bg-pink-400">Khám phá ngay bộ
+                        sưu tập Charmily</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 5. Chia sẻ câu chuyện cộng đồng -->
+    <section class="bg-gray-100 py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-800">Câu chuyện vòng tay charm</h2>
+            <p class="mt-4 text-lg text-gray-600">Khám phá những câu chuyện ý nghĩa đằng sau từng chiếc vòng tay charm custom, từ việc thể hiện cá tính đến lưu giữ những kỷ niệm đáng nhớ.</p>
+            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+                <!-- Câu chuyện vòng tay charm 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+<h3 class="text-xl font-semibold text-gray-800">Chiếc vòng của tình bạn</h3>
+                    <p class="mt-4 text-gray-600">Một nhóm bạn thân đã tạo nên những chiếc vòng tay charm với biểu tượng độc đáo, đại diện cho kỷ niệm không thể quên của họ...</p>
+                </div>
+                <!-- Câu chuyện vòng tay charm 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-gray-800">Hành trình tìm kiếm phong cách riêng</h3>
+                    <p class="mt-4 text-gray-600">Câu chuyện của một bạn trẻ đã tìm thấy phong cách cá nhân qua việc tạo nên chiếc vòng tay charm mang dấu ấn riêng...</p>
+                </div>
+                <!-- Các câu chuyện khác -->
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 6. Sự kiện và chương trình đặc biệt -->
+    <section class="bg-pink-300 text-white py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold">Sự kiện đặc biệt sắp tới</h2>
+            <p class="mt-4 text-lg">Đừng bỏ lỡ các sự kiện và chương trình thú vị của Xanh Đấu. Chúng tôi luôn có những
+                hoạt động mới mẻ dành cho bạn!</p>
+            <div class="mt-8">
+                <a href="#" class="bg-white text-pink-400 px-6 py-3 rounded-md hover:text-black">Tham gia ngay</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Khuyến mãi và ưu đãi đặc biệt -->
+    <section class="bg-gray-100 py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-800">Khuyến mãi đặc biệt</h2>
+            <p class="mt-4 text-lg text-gray-600">Giảm giá 15% khi bạn tham gia sự kiện của charmily .
+                Đừng bỏ lỡ cơ hội này!</p>
+        </div>
+    </section>
+
+    <!-- 8. Đánh giá và ý kiến người chơi -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-800">Đánh giá và ý kiến của khách hàng</h2>
+            <p class="mt-4 text-lg text-gray-600">Chia sẻ cảm nhận của bạn về vòng tay charm custom và những câu chuyện ý nghĩa mà bạn muốn gửi gắm qua từng thiết kế độc đáo.</p>
+        </div>
+    </section>
+
+
+    <!-- 9. Newsletter đăng ký -->
+    <section class="bg-pink-300 text-white py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold">Đăng ký nhận tin</h2>
+            <p class="mt-4 text-lg">Đừng bỏ lỡ bất kỳ thiết kế charm độc đáo nào. Đăng ký email để cập nhật xu hướng mới, chương trình khuyến mãi đặc biệt và câu chuyện ý nghĩa từ vòng tay charm custom.</p>
+            <div class="mt-8">
+                <input type="email" placeholder="Nhập email của bạn"
+                       class="p-3 rounded-md text-gray-700 w-1/2 sm:w-1/3">
+                <button class="bg-black text-white px-6 py-3 rounded-md">Đăng ký</button>
+            </div>
+        </div>
+    </section>
+
+</div>

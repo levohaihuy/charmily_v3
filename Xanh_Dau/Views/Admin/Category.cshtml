@@ -1,0 +1,212 @@
+@model Xanh_Dau.DTO.CategoryDTO
+@{
+    ViewData["Title"] = "Category Management Page";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css"/>
+<link rel="stylesheet" href="~/tailwind/build/tailwind.css">
+<link rel="stylesheet" href="~/fonts/boxicons.css"/>
+<script src="~/js/site.js"></script>
+
+<div class="p-6 bg-gray-100 min-h-screen">
+    <h3 class="text-xl font-semibold text-gray-800 mb-6">Quản lý danh mục sản phẩm</h3>
+
+    <!-- Search & Filter Tools -->
+    <div class="bg-white p-6 rounded-lg shadow-lg mb-2">
+        <h3 class="text-xl font-semibold text-gray-800">Công cụ tìm kiếm và lọc</h3>
+        <div class="flex justify-end mb-3">
+            <button class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none"
+                    onclick="openModal()">
+                Tạo danh mục mới
+            </button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Tìm kiếm sản phẩm -->
+            <input type="text" placeholder="Tìm kiếm theo tên sản phẩm, mã sản phẩm"
+                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+
+            <!-- Lọc theo trạng thái sản phẩm -->
+            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                <option value="">Trạng thái sản phẩm</option>
+                <option value="active">Đang khuyến mãi</option>
+                <option value="suspended">Tạm khóa</option>
+            </select>
+
+            <!-- Lọc theo loại sản phẩm -->
+            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                <option value="">Loại sản phẩm</option>
+                <option value="electronics">Điện tử</option>
+                <option value="fashion">Thời trang</option>
+                <option value="home">Đồ gia dụng</option>
+            </select>
+
+            <!-- Lọc theo ngày nhập -->
+            <input type="date" placeholder="Ngày nhập"
+                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+        </div>
+    </div>
+
+    <!-- Bảng danh mục sản phẩm -->
+    <div class="bg-white p-6 rounded-lg shadow-lg" style="min-height: 280px;">
+        <h4 class="text-lg font-semibold text-gray-800 mb-4">Danh sách danh mục</h4>
+        <div class="overflow-x-auto" style="min-height: 280px;">
+            <table class="w-full border-collapse border border-gray-200">
+                <thead>
+                <tr class="bg-gray-100 text-gray-600 text-sm">
+                    <th class="border border-gray-200 px-4 py-2 text-left">ID</th>
+                    <th class="border border-gray-200 px-4 py-2 text-left">Tên danh mục</th>
+                    <th class="border border-gray-200 px-4 py-2 text-left">Mô tả</th>
+                    <th class="border border-gray-200 px-4 py-2 text-left">Trạng thái</th>
+                    <th class="border border-gray-200 px-4 py-2 text-left">Ngày tạo</th>
+                    <th class="border border-gray-200 px-4 py-2 text-center">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody class="text-sm text-gray-700">
+                @foreach (var category in Model.ListCategories)
+                {
+                    <tr class="hover:bg-gray-50">
+                        <td class="border border-gray-200 px-4 py-2">@category.CategoryId</td>
+                        <td class="border border-gray-200 px-4 py-2">@category.Name</td>
+                        <td class="border border-gray-200 px-4 py-2">@category.Description</td>
+                        <td class="border border-gray-200 px-4 py-2 text-green-500">@category.Status</td>
+                        <td class="border border-gray-200 px-4 py-2">@category.CreatedAt</td>
+                        <td class="border border-gray-200 px-4 py-2 text-center">
+                            <div class="relative">
+                                <button class="px-2 py-1 text-black focus:outline-none" onclick="toggleDropdown(this)">
+                                    <i class='bx bx-dots-vertical-rounded'></i>
+                                </button>
+                                <div class="absolute hidden mt-2 bg-white border border-gray-200 rounded shadow-lg w-40"
+                                     style="margin-left: -7rem; top: 1.3rem;">
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Chỉnh
+                                        sửa</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Xóa</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100">Khóa danh
+                                        mục</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-end items-center mt-6">
+            <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none">
+                Trước
+            </button>
+            <button class="px-4 py-2 mx-1 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">
+                1
+            </button>
+            <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none">
+                2
+            </button>
+            <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none">
+                3
+            </button>
+            <span class="px-2 text-gray-600">...</span>
+            <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none">
+                Tiếp
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal "Thêm danh mục mới" -->
+<div id="modal" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg w-96 p-6">
+        <h4 class="text-lg font-semibold text-gray-800 mb-4">Thêm danh mục mới</h4>
+
+        <form id="form" method="post" asp-action="Category" enctype="multipart/form-data">
+            <!-- Tên danh mục -->
+            <div class="mb-4">
+                <label for="category-name" class="block text-gray-700">Tên danh mục</label>
+                <input asp-for="Category.Name" type="text" id="category-name"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
+                       placeholder="Nhập tên danh mục">
+            </div>
+
+            <!-- Mô tả danh mục -->
+            <div class="mb-4">
+                <label for="category-description" class="block text-gray-700">Mô tả</label>
+                <textarea asp-for="Category.Description" id="category-description" rows="3"
+                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
+                          placeholder="Mô tả danh mục"></textarea>
+            </div>
+
+            <!-- Trạng thái -->
+            <div class="mb-4">
+                <label for="category-status" class="block text-gray-700">Trạng thái</label>
+                <select asp-for="Category.Status" id="category-status"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                    <option value="Active">Hoạt động</option>
+                    <option value="Inactive">Không hoạt động</option>
+                </select>
+            </div>
+
+            <!-- Nút Thêm danh mục -->
+            <div class="flex justify-end mt-4">
+                <button type="button"
+                        class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 focus:outline-none mr-2"
+                        onclick="closeModal()">Hủy
+                </button>
+                <button type="button"
+                        class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
+                        onclick="submitCategory()">Thêm danh mục
+                </button>
+            </div>
+        </form>
+
+        <!-- Nút Đóng modal -->
+        <button onclick="closeModal()"
+                class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none">
+            <i class="bx bx-x text-xl"></i>
+        </button>
+    </div>
+</div>
+
+
+<script>
+    //JS for Dropdown Menu
+    function toggleDropdown(button) {
+        const dropdown = button.nextElementSibling;
+        dropdown.classList.toggle('hidden');
+    }
+
+    // Mở modal
+    function openModal() {
+        document.getElementById('modal').classList.remove('hidden');
+    }
+
+    // Đóng modal
+    function closeModal() {
+        document.getElementById('modal').classList.add('hidden');
+    }
+
+    // Xử lý submit form thêm danh mục (có thể thêm logic backend ở đây)
+    function submitCategory() {
+        const name = document.getElementById('category-name').value;
+        const description = document.getElementById('category-description').value;
+        const status = document.getElementById('category-status').value;
+        const formdata = document.getElementById('form');
+
+        formdata.submit();
+        document.getElementById('category-name').value = '';
+        document.getElementById('category-description').value = '';
+        document.getElementById('category-status').value = '';
+
+        // Gửi thông tin đến server (ví dụ: sử dụng fetch hoặc AJAX để thêm danh mục mới)
+        console.log('Thêm danh mục:', {name, description, status});
+
+        // Đóng modal sau khi thêm thành công
+        closeModal();
+    }
+
+    // Dropdown menu
+    function toggleDropdown(button) {
+        const dropdown = button.nextElementSibling;
+        dropdown.classList.toggle('hidden');
+    }
+</script>

@@ -1,0 +1,251 @@
+﻿@using System.IdentityModel.Tokens.Jwt
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+@{
+    var token = Context.Request.Cookies["auth_token"]; // Lấy token từ cookie hoặc header
+    string username = null;
+    string userPicture = null;
+    if (!string.IsNullOrEmpty(token))
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(token);
+
+        var imageUrlClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "UserName");
+        var pictureClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "Picture");
+        if (imageUrlClaim != null)
+        {
+            username = imageUrlClaim.Value;
+        }
+        if (pictureClaim != null && !string.IsNullOrEmpty(pictureClaim.Value))
+        {
+            userPicture = pictureClaim.Value;
+        }
+    }
+}
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - Xanh_Dau</title>
+    <link rel="icon" type="image/x-icon" href="~/logo.ico"/>
+    <link rel="stylesheet" href="~/tailwind/build/tailwind.css">
+    <link rel="stylesheet" href="~/fonts/boxicons.css"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/Xanh_Dau.styles.css" asp-append-version="true"/>
+</head>
+<body>
+<header class="bg-pink-300 text-white shadow-md">
+    <nav class="container mx-auto flex items-center justify-between p-4">
+        <!-- Logo -->
+        <a asp-controller="Home" asp-action="Index"
+           class="flex items-center space-x-2 text-2xl font-bold text-white playwrite-au-sa-guides-regular">
+            <img src="/img/─æa╠â su╠¢╠ëa.png" alt="Logo" class="h-32 w-32 ml-20 rounded-full">
+            <img src="/img/logo.png" alt="logo" class="h-32 w-32 ml-20 rounded-full">
+        </a>
+
+        <!-- Menu toggle button (Mobile) -->
+        <button class="lg:hidden text-white focus:outline-none" id="menu-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+            </svg>
+        </button>
+
+        <!-- Navigation Links -->
+        <div class="hidden lg:flex space-x-6 items-center" id="menu">
+            <a asp-controller="Home" asp-action="Index" class="text-black text-2sm">Trang chủ</a>
+            <a asp-controller="Home" asp-action="About" class="text-black text-2sm">Giới thiệu</a>
+            <a asp-controller="Home" asp-action="Shop" class="text-black text-2sm">Cửa hàng</a>
+            <a asp-controller="Home" asp-action="Blog" class="text-black text-2sm">Blog</a>
+            <a asp-controller="Home" asp-action="Event" class="text-black text-2sm">Sự kiện <span
+                    class="text-1xs bg-black text-white rounded px-1 ml-1">Sắp ra mắt</span></a>
+            <a asp-controller="Home" asp-action="Contact" class="text-black text-2sm">Liên hệ</a>
+            <a asp-controller="Home" asp-action="FAQs" class="text-black text-2sm">Câu hỏi thường gặp</a>
+        </div>
+
+
+        <!-- Right section: Notifications, Cart, Language, Login -->
+        <div class="hidden lg:flex space-x-4 items-center">
+            <a asp-controller="Home" asp-action="CartDetail" class="text-black mr-1 4">
+                <i class="bx ml-10 bx-cart-alt"></i>
+            </a>
+            @* <a asp-controller="Auth" asp-action="Login" class="text-lg font-semibold text-white-800 hover:text-black-500 
+                    hover:underline transition-all duration-300 transform hover:scale-105">
+                    Đăng nhập
+                </a>
+                <a asp-controller="Auth" asp-action="Register" class="text-lg font-semibold text-white-800 hover:text-black-500 
+                    hover:underline transition-all duration-300 transform hover:scale-105 ml-4">
+                    Đăng ký
+                </a> *@
+
+            <div class="relative">
+                @if (username == null)
+                {
+                    <a asp-controller="Auth" asp-action="Login" class="text-lg font-semibold text-white-800 hover:text-black-500 
+                        hover:underline transition-all duration-300 transform hover:scale-105">
+                        Đăng nhập
+                    </a>
+                    <a asp-controller="Auth" asp-action="Register" class="text-lg font-semibold text-white-800 hover:text-black-500 
+                        hover:underline transition-all duration-300 transform hover:scale-105 ml-4">
+                        Đăng ký
+                    </a>
+                }
+                else
+                {
+                    <!-- Avatar Button -->
+                    <button class="flex items-center focus:outline-none" id="userDropdownButton" aria-expanded="false">
+                        <img src="@userPicture" alt="User Avatar" class="w-9 h-9 rounded-full object-cover">
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <ul id="userDropdownMenu"
+                        class="absolute right-0 mt-2 bg-white border border-gray-200 rounded-md shadow-lg w-56 hidden z-10">
+                        <!-- User Info -->
+                        <li class="flex items-center px-4 py-2">
+                            @if (!string.IsNullOrEmpty(userPicture))
+                            {
+                            <img src="@userPicture" alt="User Avatar" class="w-8 h-8 rounded-full object-cover mr-2">
+                            }
+                            else
+                            {
+                            <img src="/default-avatar.png" alt="Default Avatar" class="w-8 h-8 rounded-full object-cover mr-2">
+                            }
+                            <span class="text-black">@username</span>
+                        </li>
+                        <li>
+                            <hr class="border-gray-300">
+                        </li>
+                        <!-- Menu Items -->
+                        <li><a asp-controller="Auth" asp-action="Profile"
+                               class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Hồ sơ cá nhân</a></li>
+                        <li><a asp-controller="Order" asp-action="MyOrders"
+                               class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Đơn mua của bạn</a></li>
+                        <li class=" text-red-700"><a asp-controller="Auth" asp-action="Logout"
+                                                     class="block px-4 py-2 hover:bg-gray-100">Đăng xuất</a></li>
+                    </ul>
+                }
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="lg:hidden hidden bg-green-800 text-white space-y-4 px-4 py-6" id="mobile-menu">
+        <a href="/" class="block text-white mb-4 text-sm hover:text-green-300">Trang chủ</a>
+        <a href="/about" class="block text-white mb-4 text-sm hover:text-green-300">Giới thiệu</a>
+        <a href="/shop" class="block text-white mb-4 text-sm hover:text-green-300">Cửa hàng</a>
+        <a href="/blog" class="block text-white mb-4 text-sm hover:text-green-300">Blog</a>
+        <a href="/events" class="block text-white mb-4 text-sm hover:text-green-300">Sự kiện <span
+                class="text-xs bg-yellow-500 text-black rounded px-1 ml-1">Sắp ra mắt</span></a>
+        <a href="/contact" class="block text-white mb-4 text-sm hover:text-green-300">Liên hệ</a>
+        <a href="/faqs" class="block text-white mb-4 text-sm hover:text-green-300">Câu hỏi thường gặp</a>
+    </div>
+</header>
+<div class="container p-0">
+    <main role="main">
+        @RenderBody()
+    </main>
+</div>
+<footer class="bg-pink-300 py-12">
+    <div class="container mx-auto px-6 px-5">
+        <!-- Logo và Tên Công Ty -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+            <div class="flex items-center mb-4 md:mb-0">
+                <img src="/img/Logo.jpg" alt="Logo Xanh Đấu" class="h-16 mr-4 rounded-full">
+                <span class="text-3xl font-bold text-black">Charmily</span>
+            </div>
+            <div class="text-center md:text-right">
+                <p class="text-lg italic text-black">Cùng Tỏa sáng rực rõ với Charmily!</p>
+            </div>
+        </div>
+
+        <!-- Điều Hướng Chính -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-black">Liên kết Chính</h3>
+                <ul class="space-y-2">
+                    <li><a asp-controller="Home" asp-action="Index" class="text-black hover:text-pink-400">Trang chủ</a></li>
+                    <li><a asp-controller="Home" asp-action="About" class="text-black hover:text-pink-400">Giới thiệu</a></li>
+                    <li><a asp-controller="Home" asp-action="Shop" class="text-black hover:text-pink-400">Cửa hàng</a></li>
+                    <li><a asp-controller="Home" asp-action="Blog" class="text-black hover:text-pink-400">Blog</a></li>
+                    <li><a asp-controller="Home" asp-action="Event" class="text-black hover:text-pink-400">Sự kiện</a></li>
+                    <li><a asp-controller="Home" asp-action="Contact" class="text-black hover:text-pink-400">Liên hệ</a></li>
+                    <li><a asp-controller="Home" asp-action="FAQs" class="text-black hover:text-pink-400">Câu hỏi thường dùng</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-black">Địa Chỉ và Liên Hệ</h3>
+                <ul class="space-y-2">
+                    <li class="text-black">
+                        <i class="fas fa-map-marker-alt text-red-500"></i>
+                        Địa chỉ: 123 đường Nguyễn Văn Cừ, Cần Thơ, Việt Nam
+                    </li>
+                    <li class="text-black">
+                        <i class="bx bx-phone text-black"></i>
+                        Điện thoại: +84 123 456 789
+                    </li>
+                    <li class="text-black">
+                        <i class="bx bxl-instagram text-black"></i>
+                        Instagram: <a href="https://www.instagram.com/charmify_italianbracelet/" class="hover:text-black">Charmily</a>
+                    </li>
+                    <li class="text-black">
+                        <i class="fas fa-clock text-blue-500"></i>
+                        Giờ làm việc: T2 - T6, 8:00 AM - 6:00 PM
+                    </li>
+                </ul>
+            </div>
+            <!-- Đăng Ký Nhận Bản Tin -->
+            <div class="col-span-2">
+                <h3 class="text-xl font-semibold mb-4 text-black">Đăng Ký Nhận Bản Tin</h3>
+                <p class="text-lg mb-4 text-black">Đăng ký nhận bản tin để không bỏ lỡ các ưu đãi đặc biệt và thông tin hữu ích từ Charmily.</p>
+                <div class="flex">
+                    <input type="email" placeholder="Nhập email của bạn" class="px-4 w-full rounded-l-lg focus:outline-none bg-white text-black"/>
+                    <button class="px-6 w-32 py-2 font-bold bg-black text-white rounded-r-lg transition duration-300 ease-in-out">
+                        Đăng Ký
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bản Quyền và Thông Tin Pháp Lý -->
+        <div class="text-center text-sm text-black">
+            <p>© 2024 Xanh Đấu. All Rights Reserved.</p>
+            <p>Các thông tin pháp lý và quyền sở hữu trí tuệ được bảo vệ theo quy định của pháp luật.</p>
+        </div>
+    </div>
+</footer>
+
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+    // Toggle menu for mobile
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+    });
+
+    const userDropdownButton = document.getElementById('userDropdownButton');
+    const userDropdownMenu = document.getElementById('userDropdownMenu');
+
+    userDropdownButton.addEventListener('click', () => {
+        // Toggle dropdown menu visibility
+        userDropdownMenu.classList.toggle('hidden');
+    });
+
+    // Close the dropdown menu if clicked outside
+    document.addEventListener('click', (event) => {
+        if (!userDropdownButton.contains(event.target) && !userDropdownMenu.contains(event.target)) {
+            userDropdownMenu.classList.add('hidden');
+        }
+    });
+</script>
+@await RenderSectionAsync("Scripts", false)
+</body>
+</html>
